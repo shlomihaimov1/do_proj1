@@ -31,7 +31,12 @@ pipeline {
             steps {
                 echo 'Building..'
                 script {
-                    dockerImage = docker.build("--file ${dockerfilePath}", "${registry}:$BUILD_NUMBER")
+                    try {
+                        dockerImage = docker.build("--file ${dockerfilePath}", "${registry}:$BUILD_NUMBER")
+                    } catch (Exception e) {
+                        echo "Error during Docker build: ${e.message}"
+                        throw e
+                    }
                 }
             }
         }
