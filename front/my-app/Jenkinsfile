@@ -14,12 +14,12 @@ pipeline {
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
             }
         }
-        stage('Checkout') {
-            steps {
-                echo 'Cloning Git..'
-                git 'https://github.com/shlomihaimov1/do_proj1.git'
-            }
-        }
+        // stage('Checkout') {
+        //     steps {
+        //         echo 'Cloning Git..'
+        //         git 'https://github.com/shlomihaimov1/do_proj1.git'
+        //     }
+        // }
         // stage('Test') {
         //     steps {
         //         echo 'Testing..'
