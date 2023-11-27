@@ -5,6 +5,7 @@ pipeline {
         registry = "shlomihaimov1/proj1-front"
         registryCredential = 'dockerhub'
         dockerImage = ''
+        dockerfilePath = 'front/my-app/Dockerfile'
     }
 
     stages {
@@ -30,7 +31,7 @@ pipeline {
             steps {
                 echo 'Building..'
                 script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    dockerImage = docker.build("--file ${dockerfilePath}", "${registry}:$BUILD_NUMBER")
                 }
             }
         }
