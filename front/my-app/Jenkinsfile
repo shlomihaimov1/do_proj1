@@ -1,11 +1,23 @@
 pipeline {
     agent any
 
+    environment {
+        registry = "shlomihaimov1/proj1-front"
+        registryCredential = 'dockerhub'
+        dockerImage = ''
+    }
+
     stages {
         stage('Init') {
             steps {
                 echo 'Initializing..'
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
+            }
+        }
+        stage('Checkout') {
+            steps {
+                echo 'Cloning Git..'
+                git 'https://github.com/shlomihaimov1/do_proj1.git'
             }
         }
         // stage('Test') {
@@ -17,19 +29,29 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                echo 'Running docker build -t sntshk/cotu .'
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
             }
         }
         stage('Publish') {
             steps {
                 echo 'Publishing..'
-                echo 'Running docker push..'
+                docker.withRegistry( '', registryCredential ) {
+                    dockerImage.push()
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying..'
+                
             }
         }
         stage('Cleanup') {
             steps {
                 echo 'Cleaning..'
-                echo 'Running docker rmi..'
+                sh "docker rmi $registry:$BUILD_NUMBER"
             }
         }
     }
