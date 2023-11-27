@@ -7,8 +7,8 @@ CORS(app, support_credentials=True)
 
 @app.route('/', methods=['POST', 'GET'])
 def main():
-    return {'res': True, 'data': '1'}
+    return {'res': True, 'data': '2'}
 
 # main driver function
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
