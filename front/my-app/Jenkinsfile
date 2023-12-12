@@ -6,7 +6,7 @@ pipeline {
         registryCredential = 'dockerhub'
         imageName = "front:latest"
         dockerImage = ''
-        dockerfilePath = 'front/my-app/Dockerfile'
+        dockerfilePath = '/opt/jenkins/workspace/proj1-front/front/my-app/Dockerfile'
     }
 
     stages {
