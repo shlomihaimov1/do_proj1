@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'elad-labs'
+    }
 
     environment {
         registry = "shlomihaimov1/front:latest"
