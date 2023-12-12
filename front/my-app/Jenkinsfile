@@ -35,6 +35,8 @@ pipeline {
                     try {
                         // dockerImage = docker.build("front:${env.BUILD_ID}",
                         //            "-f Dockerfile ${dockerfilePath}")
+                        sh "ll"
+                        sh "ll /app/"
                         dockerImage = docker.build("${imageName}", "${dockerfilePath}") 
                         // // docker.build("--file ${dockerfilePath}", "${registry}:$BUILD_NUMBER")
                         // docker.withRegistry("${registryCredential}", 'credentials-id') {
