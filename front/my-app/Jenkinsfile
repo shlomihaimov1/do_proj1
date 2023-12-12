@@ -3,9 +3,13 @@ pipeline {
         label 'elad-labs'
     }
 
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+    }
+
     environment {
         registry = "shlomihaimov1/front:latest"
-        registryCredential = credentials('shlomihaimov1')
+        registryCredential = credentials('dockerhub')
         dockerfilePath = 'front/my-app'
     }
 
@@ -14,9 +18,6 @@ pipeline {
             steps {
                 echo 'Initializing..'
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-                script {
-                    checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, userRemoteConfigs: [[url: 'https://github.com/shlomihaimov1/do_proj1.git']]])
-                }
             }
         }
         // stage('Test') {
