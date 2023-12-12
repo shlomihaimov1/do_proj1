@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        registry = "shlomihaimov1"
+        registry = "shlomihaimov1/front:latest"
         registryCredential = 'dockerhub'
         imageName = "front:latest"
         dockerImage = ''
@@ -36,7 +36,7 @@ pipeline {
                         // dockerImage = docker.build("front:${env.BUILD_ID}",
                         //            "-f Dockerfile ${dockerfilePath}")
 
-                        dockerImage = docker.build(imageName, dockerfilePath) 
+                        dockerImage = docker.build(registry, dockerfilePath) 
                         // // docker.build("--file ${dockerfilePath}", "${registry}:$BUILD_NUMBER")
                         // docker.withRegistry("${registryCredential}", 'credentials-id') {
 
