@@ -5,9 +5,7 @@ pipeline {
 
     environment {
         registry = "shlomihaimov1/front:latest"
-        registryCredential = 'shlomihaimov1'
-        imageName = "front:latest"
-        dockerImage = ''
+        registryCredential = credentials('shlomihaimov1')
         dockerfilePath = 'front/my-app'
     }
 
@@ -18,12 +16,6 @@ pipeline {
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
             }
         }
-        // stage('Checkout') {
-        //     steps {
-        //         echo 'Cloning Git..'
-        //         git 'https://github.com/shlomihaimov1/do_proj1.git'
-        //     }
-        // }
         // stage('Test') {
         //     steps {
         //         echo 'Testing..'
