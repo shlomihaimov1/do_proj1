@@ -35,19 +35,7 @@ pipeline {
                 echo 'Building..'
                 script {
                     try {
-                        // dockerImage = docker.build("front:${env.BUILD_ID}",
-                        //            "-f Dockerfile ${dockerfilePath}")
-
                         dockerImage = docker.build(registry, dockerfilePath) 
-                        // // docker.build("--file ${dockerfilePath}", "${registry}:$BUILD_NUMBER")
-                        // docker.withRegistry("${registryCredential}", 'credentials-id') {
-
-                        //     def customImage = docker.build("my-image:${env.BUILD_ID}")
-
-                        //     /* Push the container to the custom Registry */
-                        //     customImage.push()
-                        // }
-                        // sh "docker build -t ${registry}/${imageName} -f ${dockerfilePath} ."
                     } catch (Exception e) {
                         echo "Error during Docker build: ${e.message}"
                         throw e
@@ -58,10 +46,13 @@ pipeline {
         stage('Publish') {
             steps {
                 echo 'Publishing..'
+                // script {
+                //     docker.withRegistry( '', registryCredential ) {
+                //         dockerImage.push()
+                //     }
+                // }
                 script {
-                    docker.withRegistry( '', registryCredential ) {
-                        dockerImage.push()
-                    }
+                    dockerImage.push()
                 }
             }
         }
@@ -74,7 +65,7 @@ pipeline {
         stage('Cleanup') {
             steps {
                 echo 'Cleaning..'
-                sh "docker rmi $registry:$BUILD_NUMBER"
+                // sh "docker rmi $registry:$BUILD_NUMBER"
             }
         }
     }
