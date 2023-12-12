@@ -9,7 +9,7 @@ pipeline {
 
     environment {
         registry = "shlomihaimov1/front:latest"
-        registryCredential = credentials('dockerhub')
+        // registryCredential = credentials('dockerhub')
         dockerfilePath = 'front/my-app'
     }
 
@@ -43,7 +43,10 @@ pipeline {
             steps {
                 echo 'Publishing..'
                 script {
-                    docker.withRegistry( '', registryCredential ) {
+                    // docker.withRegistry( '', registryCredential ) {
+                    //     dockerImage.push()
+                    // }
+                    docker.withRegistry('https://index.docker.io/v1/', 'DOCKER_HUB') {
                         dockerImage.push()
                     }
                 }
