@@ -6,7 +6,7 @@ pipeline {
         registryCredential = 'dockerhub'
         imageName = "front:latest"
         dockerImage = ''
-        dockerfilePath = '/opt/jenkins/workspace/proj1-front/front/my-app/Dockerfile'
+        dockerfilePath = 'front/my-app'
     }
 
     stages {
@@ -36,7 +36,7 @@ pipeline {
                         // dockerImage = docker.build("front:${env.BUILD_ID}",
                         //            "-f Dockerfile ${dockerfilePath}")
 
-                        dockerImage = docker.build("${imageName}", "${dockerfilePath}") 
+                        dockerImage = docker.build(imageName, dockerfilePath) 
                         // // docker.build("--file ${dockerfilePath}", "${registry}:$BUILD_NUMBER")
                         // docker.withRegistry("${registryCredential}", 'credentials-id') {
 
