@@ -59,14 +59,14 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying..'
-                // script {  
-                    // try {
-                    //     sh "helm upgrade -i --create-namespace --namespace proj1 ${helmChartName} ${helmChartPath}"
-                    // } catch (Exception e) {
-                    //     echo "Error during helm chart build: ${e.message}"
-                    //     throw e
-                    // }
-                // }
+                script {  
+                    try {
+                        sh "helm upgrade -i --create-namespace --namespace proj1 ${helmChartName} ${helmChartPath}"
+                    } catch (Exception e) {
+                        echo "Error during helm chart build: ${e.message}"
+                        throw e
+                    }
+                }
             }
         }
         stage('Cleanup') {
