@@ -12,7 +12,7 @@ pipeline {
         registryCredential = 'dockerhub' 
         dockerfilePath = 'front/my-app'
         helmChartPath = './front/my-app/front_chart'
-        helmChartName = 'front_chart'
+        helmChartName = 'front'
     }
 
     stages {
