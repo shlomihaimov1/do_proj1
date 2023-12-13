@@ -9,7 +9,7 @@ pipeline {
 
     environment {
         registry = "shlomihaimov1/front:latest"
-        registryCredential = 'dockerhub' //credentials('dockerhub')
+        registryCredential = 'dockerhub' 
         dockerfilePath = 'front/my-app'
     }
 
@@ -44,17 +44,11 @@ pipeline {
                 echo 'Publishing..'
                 script {               
                     try {
-                        // sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
-                        //  sh 'docker push lloydmatereke/jenkins-docker-hub'
-                        // docker.withRegistry('', registryCredential) {
-                        //     dockerImage.push()
-                        // }
                         withDockerRegistry(credentialsId: registryCredential) {
                             dockerImage.push()
                         }
-
                     } catch (Exception e) {
-                        echo "Error during Docker build: ${e.message}"
+                        echo "Error during Docker publish: ${e.message}"
                         throw e
                     }
                 }
@@ -63,7 +57,12 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying..'
-                
+                try {
+                        sh 'helm install front_chart ./front/front_chart'
+                    } catch (Exception e) {
+                        echo "Error during helm chart build: ${e.message}"
+                        throw e
+                    }
             }
         }
         stage('Cleanup') {
