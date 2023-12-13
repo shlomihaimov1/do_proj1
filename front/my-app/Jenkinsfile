@@ -57,12 +57,14 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying..'
-                try {
+                script {  
+                    try {
                         sh 'helm install front_chart ./front/front_chart'
                     } catch (Exception e) {
                         echo "Error during helm chart build: ${e.message}"
                         throw e
                     }
+                }
             }
         }
         stage('Cleanup') {
