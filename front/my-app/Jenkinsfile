@@ -9,7 +9,7 @@ pipeline {
 
     environment {
         registry = "shlomihaimov1/front:latest"
-        // registryCredential = credentials('dockerhub')
+        registryCredential = credentials('dockerhub')
         dockerfilePath = 'front/my-app'
     }
 
