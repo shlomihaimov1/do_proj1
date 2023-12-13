@@ -11,6 +11,8 @@ pipeline {
         registry = "shlomihaimov1/front:latest"
         registryCredential = 'dockerhub' 
         dockerfilePath = 'front/my-app'
+        helmChartPath = './front/my-app/front_chart'
+        helmChartName = 'front_chart'
     }
 
     stages {
@@ -59,7 +61,7 @@ pipeline {
                 echo 'Deploying..'
                 script {  
                     try {
-                        sh 'helm install front_chart ./front/front_chart'
+                        sh "helm install ${helmChartName} ${helmChartPath}"
                     } catch (Exception e) {
                         echo "Error during helm chart build: ${e.message}"
                         throw e
