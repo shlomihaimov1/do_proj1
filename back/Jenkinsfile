@@ -11,7 +11,7 @@ pipeline {
         registry = "shlomihaimov1/back:latest"
         registryCredential = 'dockerhub' 
         dockerfilePath = 'back'
-        helmChartPath = './back/front_chart'
+        helmChartPath = './back/back_chart'
         helmChartName = 'back'
     }
 
