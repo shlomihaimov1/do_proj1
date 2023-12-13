@@ -61,7 +61,7 @@ pipeline {
                 echo 'Deploying..'
                 script {  
                     try {
-                        sh "helm install ${helmChartName} ${helmChartPath}"
+                        sh "helm upgrade -i ${helmChartName} ${helmChartPath}"
                     } catch (Exception e) {
                         echo "Error during helm chart build: ${e.message}"
                         throw e
