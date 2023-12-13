@@ -1,5 +1,19 @@
 pipeline {
-    agent any
+    agent {
+        label 'elad-labs'
+    }
+
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+    }
+
+    environment {
+        registry = "shlomihaimov1/back:latest"
+        registryCredential = 'dockerhub' 
+        dockerfilePath = 'back'
+        helmChartPath = './back/front_chart'
+        helmChartName = 'back'
+    }
 
     stages {
         stage('Init') {
@@ -17,19 +31,48 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                echo 'Running docker build -t sntshk/cotu .'
+                script {
+                    try {
+                        dockerImage = docker.build(registry, dockerfilePath) 
+                    } catch (Exception e) {
+                        echo "Error during Docker build: ${e.message}"
+                        throw e
+                    }
+                }
             }
         }
         stage('Publish') {
             steps {
                 echo 'Publishing..'
-                echo 'Running docker push..'
+                script {               
+                    try {
+                        withDockerRegistry(credentialsId: registryCredential) {
+                            dockerImage.push()
+                        }
+                    } catch (Exception e) {
+                        echo "Error during Docker publish: ${e.message}"
+                        throw e
+                    }
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying..'
+                script {  
+                    // try {
+                    //     sh "helm upgrade -i --create-namespace --namespace proj1 ${helmChartName} ${helmChartPath}"
+                    // } catch (Exception e) {
+                    //     echo "Error during helm chart build: ${e.message}"
+                    //     throw e
+                    // }
+                }
             }
         }
         stage('Cleanup') {
             steps {
                 echo 'Cleaning..'
-                echo 'Running docker rmi..'
+                // sh "docker rmi $registry:$BUILD_NUMBER"
             }
         }
     }
