@@ -61,7 +61,7 @@ pipeline {
                 echo 'Deploying..'
                 script {  
                     try {
-                        sh "helm upgrade -i ${helmChartName} ${helmChartPath}"
+                        sh "helm upgrade -i --create-namespace --namespace proj1 ${helmChartName} ${helmChartPath}"
                     } catch (Exception e) {
                         echo "Error during helm chart build: ${e.message}"
                         throw e
