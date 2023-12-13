@@ -44,9 +44,15 @@ pipeline {
                 echo 'Publishing..'
                 script {               
                     try {
-                        docker.withRegistry('', registryCredential) {
+                        // sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                        //  sh 'docker push lloydmatereke/jenkins-docker-hub'
+                        // docker.withRegistry('', registryCredential) {
+                        //     dockerImage.push()
+                        // }
+                        withDockerRegistry(credentialsId: registryCredential) {
                             dockerImage.push()
                         }
+
                     } catch (Exception e) {
                         echo "Error during Docker build: ${e.message}"
                         throw e
