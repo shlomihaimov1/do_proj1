@@ -47,9 +47,10 @@ pipeline {
                         // docker.withRegistry('https://index.docker.io/v1/', 'DOCKER_HUB') {
                         //     dockerImage.push()
                         // }
-                        docker.withRegistry( '', registryCredential ) {
-                            dockerImage.push()
-                        }
+                        // docker.withRegistry( '', registryCredential ) {
+                        //     dockerImage.push()
+                        // }
+                        dockerImage.push()
                     } catch (Exception e) {
                         echo "Error during Docker build: ${e.message}"
                         throw e
