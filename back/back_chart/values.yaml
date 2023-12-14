@@ -49,7 +49,7 @@ securityContext: {}
 #   port: 80
 service:
   enabled: true
-  type: NodePort
+  type: ClusterIP
   ports:
     app:
       port: 5000
