@@ -56,25 +56,53 @@ service:
       targetPort: 80
       protocol: TCP
 
+
+# values.yaml
+
 ingress:
   enabled: true
   className: ""
   annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
   hosts:
     - host: front.proj1.elad-labs.qk10ku2fidre3d0b4kaei4l2pd.ax.internal.cloudapp.net
       paths:
         - path: /
           pathType: Prefix
-    # - host: back.proj1.elad-labs.qk10ku2fidre3d0b4kaei4l2pd.ax.internal.cloudapp.net
-    #   paths:
-    #     - path: /
-    #       pathType: Prefix
+          backend:
+            service:
+              name: front
+              port:
+                number: 80
+    - host: back.proj1.elad-labs.qk10ku2fidre3d0b4kaei4l2pd.ax.internal.cloudapp.net
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: back
+              port:
+                number: 5000
   tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  
+# ingress:
+#   enabled: true
+#   className: ""
+#   annotations: {}
+#     # kubernetes.io/ingress.class: nginx
+#     # kubernetes.io/tls-acme: "true"
+#   hosts:
+#     - host: front.proj1.elad-labs.qk10ku2fidre3d0b4kaei4l2pd.ax.internal.cloudapp.net
+#       paths:
+#         - path: /
+#           pathType: Prefix
+#     # - host: back.proj1.elad-labs.qk10ku2fidre3d0b4kaei4l2pd.ax.internal.cloudapp.net
+#     #   paths:
+#     #     - path: /
+#     #       pathType: Prefix
+#   tls: []
+#   #  - secretName: chart-example-tls
+#   #    hosts:
+#   #      - chart-example.local
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
