@@ -4,12 +4,12 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "your-chart-name.fullname" . }}
+  name: {{ include "front_chart.fullname" . }}
   namespace: {{ .Release.Namespace }}
   annotations:
     {{- toYaml .Values.ingress.annotations | nindent 4 }}
   labels:
-    {{- include "your-chart-name.labels" . | nindent 4 }}
+    {{- include "front_chart.labels" . | nindent 4 }}
 spec:
   {{- if .Values.ingress.className }}
   ingressClassName: {{ .Values.ingress.className }}
