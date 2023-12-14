@@ -49,7 +49,7 @@ securityContext: {}
 #   port: 80
 service:
   enabled: true
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     app:
       port: 5000
