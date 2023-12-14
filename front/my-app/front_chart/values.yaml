@@ -14,10 +14,6 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: "front"
 
-# values.yaml
-namespace:
-  create: true
-  name: proj1-ns
 
 serviceAccount:
   # Specifies whether a service account should be created
@@ -49,7 +45,7 @@ securityContext: {}
 #   port: 80
 service:
   enabled: true
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     app:
       port: 80
@@ -83,7 +79,7 @@ ingress:
               port:
                 number: 5000
   tls: []
-  
+
 # ingress:
 #   enabled: true
 #   className: ""
